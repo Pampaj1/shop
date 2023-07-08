@@ -10,3 +10,11 @@ html {
 body {
     background-color: rgb(221, 221, 79);
 }
+
+body * {
+    border: 1px solid black;
+}
+
+.navbar {
+    width: 100%;
+}
