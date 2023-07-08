@@ -1,6 +1,7 @@
 * {
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
 }
 
 html {
@@ -8,13 +9,44 @@ html {
 }
 
 body {
-    background-color: rgb(221, 221, 79);
+    background-color: rgb(114, 4, 4);
 }
 
 body * {
-    border: 1px solid black;
+    
 }
 
 .navbar {
+    display: block;
     width: 100%;
+    
 }
+
+.navbar form {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.navbar input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
+
+.navbar label {
+    border: none;
+}
+
+.navbar form input[type="button"] {
+    margin-right: 40px;
+    float: right;
+    background-color: transparent;
+    border: 0px;
+}
+
