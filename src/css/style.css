@@ -39,6 +39,10 @@ button {
     border: none;
 }
 
+button:hover {
+    outline: 3px solid rgba(0, 0, 0, 20%);
+}
+
 .navbar label {
     border: none;
 }
@@ -48,5 +52,45 @@ button {
     float: right;
     background-color: transparent;
     border: 0px;
+}
+
+#container-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.box {
+    position: relative;
+    border: 1px solid black;
+    border-radius: 16px;
+    width: 250px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.photo {
+    border: 1px solid black;
+    border-radius: 16px;
+    width: 200px;
+    height: 150px;
+}
+
+.title {
+    border: 1px solid black;
+    width: 200px;
+    height: 20px;
+}
+
+.price {
+    border: 1px solid black;
+    width: 120px;
+    height: 20px;
 }
 

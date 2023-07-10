@@ -28,6 +28,7 @@ const myFunction = () => { ... }
 
 
 
+
 // Expresia ()
 
 // Self invoking function / Funkcja ktura się sama włancza po deklaracji
@@ -45,8 +46,6 @@ const myFunction = () => { ... }
 // Głównie je używamy kiedy na coś czekamy. Zajebistę do API, Promises, Fetch itd.
 async myFunction() { ... }
 const myFunction = async () => { ... }
-
-
 
 function onButtonClick() {
     saveItemToItems(newItem());
@@ -67,7 +66,38 @@ i++ or ++i   to i += 1   lub i = i + 1
 i-- or --i   to i -= 1   lub i = i - 1
 
 // Big-O Diagram na rozważanie wydajności oprogramowania na dużej skali
+
+
+
+
+
+
+// Iteracja list i objektów (hashmapów w js)
+    
+let arr = [
+    {},
+    {},
+    { item_price: 543545 },
+    {}
+]
+
+arr[2].item_price
+    
+
+let arr = [ {},{}, { item_price: "543545" } ] or []
+
+
+
+
+// Powtóż 5 razy
+for (let i = 0; i < 5; i++) {
+
+}
+
+
+
 */
+
 
 
 
@@ -78,7 +108,11 @@ let btn_submit = document.querySelector("#menu button[type='button']");
 btn_submit.addEventListener('click', () => {
     // Sapisz nowy item do listy itemów
     saveItemToItems(newItem());
+    displaySavedItems();
 });
+
+displaySavedItems();
+
 
 
 
@@ -197,4 +231,40 @@ function saveItemToItems(item) {
 
     // Zapisz liste itemów jako text w formie JSON
     localStorage.setItem("items", JSON.stringify(items)); 
+}
+
+
+// Wyświetl zapisane itemy
+function displaySavedItems() {
+    
+    let items = getOrCreateEmptyItemsList();
+    if (!items) return; // early-return
+
+    // Weź contyner itemów, i wyczyść go
+    let container = document.getElementById('container-items');
+        container.innerHTML = "";
+
+    for (let i = 0; i < items.length; i++) {
+        let title = items[i].title_value;
+        let price = items[i].price_value;
+    
+        let btn = document.createElement('button');
+            btn.className = "btn btn-dark px-2 pb-1";
+            btn.style = "position: absolute; top: 5px; right: 10px;";
+            btn.innerText = "x";
+            btn.onclick = (event) => {
+                let parentElement = event.target.parentElement;
+                parentElement.remove();
+            }
+
+        let div = document.createElement('div');
+        div.className = "item box";
+        div.innerHTML = `
+            <img class="photo" src="#" alt="item image"></img>
+            <div class="title">${title}</div>
+            <div class="price">${price}</div>
+        `;
+        div.append(btn);
+        container.append(div);
+    }
 }
