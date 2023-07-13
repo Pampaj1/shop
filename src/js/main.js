@@ -216,6 +216,7 @@ function getOrCreateEmptyItemsList() {
 // Zapisz itema do itemów
 function saveItemToItems(item) {
     // item  = { id, title_value, price_value } from newItem();
+    // item.id is a WholeNumber
 
     /* early-return If 'item' is empty: [undefined, null, 0 or false].
      
@@ -229,9 +230,35 @@ function saveItemToItems(item) {
     let items = getOrCreateEmptyItemsList();
         items.push(item); // dodaj 'item' do listy 'items'
 
-    // Zapisz liste itemów jako text w formie JSON
+    // Zapisz liste itemów jako text w formie JSON w localStorage
     localStorage.setItem("items", JSON.stringify(items)); 
 }
+
+
+
+function deleteItemFromItems(item_id) {
+    // item  = { id, title_value, price_value } from newItem();
+    // item.id is a WholeNumber
+
+    // early-return: If item_id is not a number, then stop the script.
+    if (isNaN(item_id)) return;
+
+    let items = getOrCreateEmptyItemsList();
+    // items = [ { id: 0 }. { id: 1 }, { id: 2} ];
+
+    for (let i = 0; i < items.length; i++) {
+        if ( item_id === items[i].id) {
+            items.splice(i, 1)
+            break;
+        }
+    }
+
+    // Zapisz liste itemów jako text w formie JSON w localStorage
+    localStorage.setItem("items", JSON.stringify(items));
+    
+    
+}
+
 
 
 // Wyświetl zapisane itemy
@@ -244,18 +271,25 @@ function displaySavedItems() {
     let container = document.getElementById('container-items');
         container.innerHTML = "";
 
+    // Skonstruuj wszystkie parametry dla przedmiotu (itemka)
     for (let i = 0; i < items.length; i++) {
-        let title = items[i].title_value;
-        let price = items[i].price_value;
+        let item = items[i];
+
+        let id = item.id;
+        let title = item.title_value;
+        let price = item.price_value;
     
+        const deleteItem = (event) => {
+            let parentElement = event.target.parentElement;
+            parentElement.remove();
+            deleteItemFromItems(id);
+        }
+        
         let btn = document.createElement('button');
             btn.className = "btn btn-dark px-2 pb-1";
             btn.style = "position: absolute; top: 5px; right: 10px;";
             btn.innerText = "x";
-            btn.onclick = (event) => {
-                let parentElement = event.target.parentElement;
-                parentElement.remove();
-            }
+            btn.onclick = (event) => { deleteItem(event) }
 
         let div = document.createElement('div');
         div.className = "item box";
@@ -268,3 +302,7 @@ function displaySavedItems() {
         container.append(div);
     }
 }
+
+
+
+
