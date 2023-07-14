@@ -110,3 +110,11 @@ button:hover {
     }
 }
 
+@media screen and (min-width: 1px) {
+    .navbar form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
