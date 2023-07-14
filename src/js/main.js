@@ -286,8 +286,8 @@ function displaySavedItems() {
         }
         
         let btn = document.createElement('button');
-            btn.className = "btn btn-dark px-2 pb-1";
-            btn.style = "position: absolute; top: 5px; right: 10px;";
+            btn.className = "btn btn-dark px-1";
+            btn.style = "position: absolute; top: 10px; right: 4px;";
             btn.innerText = "x";
             btn.onclick = (event) => { deleteItem(event) }
 
