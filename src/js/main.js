@@ -100,22 +100,6 @@ for (let i = 0; i < 5; i++) {
 
 
 
-
-// Weź uzyskaj dostęp do DOM elementu <button>:
-let btn_submit = document.querySelector("#menu button[type='button']");
-
-// Dodaj 'klik' event do przycisku <button>
-btn_submit.addEventListener('click', () => {
-    // Sapisz nowy item do listy itemów
-    saveItemToItems(newItem());
-    displaySavedItems();
-});
-
-displaySavedItems();
-
-
-
-
 // Nowy item
 function newItem() {
     
@@ -232,6 +216,7 @@ function saveItemToItems(item) {
 
     // Zapisz liste itemów jako text w formie JSON w localStorage
     localStorage.setItem("items", JSON.stringify(items)); 
+    
 }
 
 
@@ -260,6 +245,46 @@ function deleteItemFromItems(item_id) {
 }
 
 
+function appendItemToDisplay(item) {
+    // item  = { id, title_value, price_value } from newItem();
+
+    let id = item.id;
+    let title = item.title_value;
+    let price = item.price_value;
+
+    // Kiedy klikne przycisk 'X' to usuń mi itemka z display i localStorage
+    const deleteItem = (btn) => {
+        let parentElement = btn.parentElement;
+        parentElement.remove();
+        deleteItemFromItems(id);
+    }
+
+    // Skonstuuj guzika 'X'
+    let btn = document.createElement('button');
+        btn.innerHTML = "<i class=\"gg-remove-r\"></i>";
+        btn.className = "btn btn-outline-dark border-0 p-1 border-rounded-1";
+        btn.style = "position: absolute; top: 3px; right: 3px;";  
+        btn.onclick = () => { deleteItem(btn) }
+
+    // Skonstruuj itemka dla display
+    let div = document.createElement('div');
+        div.className = "item box";
+        div.innerHTML = `
+            <img class="photo" src="#" alt="item image"></img>
+            <p class="title">${title}</p>
+            <p class="price">${price}</p>
+        `;
+
+    // Weź contyner itemów, i wyczyść go
+    let container = document.getElementById('container-items');
+
+    div.append(btn);
+    container.append(div);
+
+    
+}
+
+
 
 // Wyświetl zapisane itemy
 function displaySavedItems() {
@@ -267,41 +292,38 @@ function displaySavedItems() {
     let items = getOrCreateEmptyItemsList();
     if (!items) return; // early-return
 
-    // Weź contyner itemów, i wyczyść go
-    let container = document.getElementById('container-items');
-        container.innerHTML = "";
-
     // Skonstruuj wszystkie parametry dla przedmiotu (itemka)
     for (let i = 0; i < items.length; i++) {
         let item = items[i];
 
-        let id = item.id;
-        let title = item.title_value;
-        let price = item.price_value;
-    
-        const deleteItem = (btn) => {
-            let parentElement = btn.parentElement;
-            parentElement.remove();
-            deleteItemFromItems(id);
-        }
-            
-        let btn = document.createElement('button');
-            btn.innerHTML = "<i class=\"gg-remove-r\"></i>";
-            btn.className = "btn btn-outline-dark border-0 p-1 border-rounded-1";
-            btn.style = "position: absolute; top: 3px; right: 3px;";  
-            btn.onclick = () => { deleteItem(btn) }
-
-        let div = document.createElement('div');
-        div.className = "item box";
-        div.innerHTML = `
-            <img class="photo" src="#" alt="item image"></img>
-            <p class="title">${title}</p>
-            <p class="price">${price}</p>
-        `;
-        div.append(btn);
-        container.append(div);
+        // Dodaj itemka do display
+        appendItemToDisplay(item);
     }
 }
+
+
+
+// ----------------------- MAIN CODE ---------------------------------------------------------------------------------------------------
+
+
+
+displaySavedItems();
+
+
+// Weź uzyskaj dostęp do DOM elementu <button>:
+let btn_submit = document.querySelector("#menu button[type='button']");
+
+// Dodaj 'klik' event do przycisku <button>
+btn_submit.addEventListener('click', () => {
+    let item = newItem();
+    if (!item) return; // early-return
+
+    // Sapisz nowy item do listy itemów i umieść go na display
+    saveItemToItems(item);
+    appendItemToDisplay(item);
+});
+
+
 
 
 
