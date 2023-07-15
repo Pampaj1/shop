@@ -279,24 +279,24 @@ function displaySavedItems() {
         let title = item.title_value;
         let price = item.price_value;
     
-        const deleteItem = (event) => {
-            let parentElement = event.target.parentElement;
+        const deleteItem = (btn) => {
+            let parentElement = btn.parentElement;
             parentElement.remove();
             deleteItemFromItems(id);
         }
-        
+            
         let btn = document.createElement('button');
-            btn.className = "btn btn-dark px-1";
-            btn.style = "position: absolute; top: 10px; right: 4px;";
-            btn.innerText = "x";
-            btn.onclick = (event) => { deleteItem(event) }
+            btn.innerHTML = "<i class=\"gg-remove-r\"></i>";
+            btn.className = "btn btn-outline-dark border-0 p-1 border-rounded-1";
+            btn.style = "position: absolute; top: 3px; right: 3px;";  
+            btn.onclick = () => { deleteItem(btn) }
 
         let div = document.createElement('div');
         div.className = "item box";
         div.innerHTML = `
             <img class="photo" src="#" alt="item image"></img>
-            <div class="title">${title}</div>
-            <div class="price">${price}</div>
+            <p class="title">${title}</p>
+            <p class="price">${price}</p>
         `;
         div.append(btn);
         container.append(div);
